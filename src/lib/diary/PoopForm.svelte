@@ -4,7 +4,8 @@ import { createEventDispatcher, onMount } from 'svelte';
 import { writable } from "svelte/store";
 import { push } from 'svelte-spa-router'
 import { poopTypes, poops, api } from "../../store/api";
-    import moment from "moment";
+import moment from "moment";
+import SvelteHeatmap from 'svelte-heatmap';
 const dispatch = createEventDispatcher()
 
 let stool = writable(0)
@@ -27,9 +28,11 @@ const badgeMap = [
     'filled-warning',
     'filled-error'
 ]
+let heatmap
 
-api.stool.getTypes()
-api.stool.getMyPoops()
+Promise.all([api.stool.getTypes(),
+api.stool.getMyPoops()])
+
 </script>
 {#if showForm}
 <div class="card mt-4 mx-4">
@@ -53,6 +56,9 @@ api.stool.getMyPoops()
     </footer>
 </div>
 {/if}
+
+<div id="poopmap"></div>
+
 <div class="flex items-center justify-center p-4">
     <button class="btn btn-filled-primary" on:click={() => { showForm = true}}>Legg til dobesøk</button>
 </div>

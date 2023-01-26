@@ -31,6 +31,12 @@
 
 const markInput = async (med) => {
     await api.medicine.checkMed(med)
+    med.checked = true
+    $todaysMedicine.map((m) => {
+        if (m.id === med.id) {
+            m.checked = true
+        }
+    })
 }
 
 const wasCheckedToday = (date) => {
@@ -39,8 +45,9 @@ const wasCheckedToday = (date) => {
 
 const isAllComplete = () => {
     const medicinesLeft = $todaysMedicine.filter((item) => {
-        return item.history.length = 0
+        return item.history && item.history.length > 0 && item.history.check
     })
+    console.log(medicinesLeft)
     return medicinesLeft.length
 
 }
@@ -49,14 +56,14 @@ onMount(async() => {
     await api.medicine.todaysMedicine()
 })
 </script>
-<!-- {#if isAllComplete() === 0}
-<div class="alert alert-success">
+{#if isAllComplete() === $todaysMedicine.length}
+<div class="alert alert-success m-4">
     <div class="alert-message">
         <h3>Flott</h3>
         <p>Du har tatt alle medisinene i dag</p>
     </div>
 </div>
-{/if} -->
+{/if}
 <div class="card m-4 p-4">
 <p>Morgen</p>
 <ul>

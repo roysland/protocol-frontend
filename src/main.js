@@ -10,7 +10,9 @@ if (storedUser) {
   
 }
 let app
-api.user.refreshToken().finally(() => {
+api.user.refreshToken().catch(() => {
+  localStorage.removeItem('user')
+}).finally(() => {
   app = new App({
     target: document.getElementById("app"),
   });

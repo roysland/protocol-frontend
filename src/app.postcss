@@ -1,0 +1,106 @@
+/* Write your global styles here, in PostCSS syntax */
+:root {
+  /* =~= Theme Properties =~= */
+  --theme-font-family-base: 'IBM Plex Sans';
+  --theme-font-family-heading: 'IBM Plex Sans';
+  --theme-font-color-base: 0 0 0;
+  --theme-font-color-dark: 255 255 255;
+  --theme-rounded-base: 4px;
+  --theme-rounded-container: 6px;
+  --theme-border-base: 2px;
+  /* =~= Theme On-X Colors =~= */
+  --on-primary: 0 0 0;
+  --on-secondary: 0 0 0;
+  --on-tertiary: 0 0 0;
+  --on-success: 0 0 0;
+  --on-warning: 0 0 0;
+  --on-error: 0 0 0;
+  --on-surface: 255 255 255;
+  /* =~= Theme Colors  =~= */
+  /* primary | #b5773d */
+--color-primary-50: 244 235 226; /* ⬅ #f4ebe2 */
+--color-primary-100: 240 228 216; /* ⬅ #f0e4d8 */
+--color-primary-200: 237 221 207; /* ⬅ #edddcf */
+--color-primary-300: 225 201 177; /* ⬅ #e1c9b1 */
+--color-primary-400: 203 160 119; /* ⬅ #cba077 */
+--color-primary-500: 181 119 61; /* ⬅ #b5773d */
+--color-primary-600: 163 107 55; /* ⬅ #a36b37 */
+--color-primary-700: 136 89 46; /* ⬅ #88592e */
+--color-primary-800: 109 71 37; /* ⬅ #6d4725 */
+--color-primary-900: 89 58 30; /* ⬅ #593a1e */
+/* secondary | #f6b391 */
+--color-secondary-50: 254 244 239; /* ⬅ #fef4ef */
+--color-secondary-100: 253 240 233; /* ⬅ #fdf0e9 */
+--color-secondary-200: 253 236 228; /* ⬅ #fdece4 */
+--color-secondary-300: 251 225 211; /* ⬅ #fbe1d3 */
+--color-secondary-400: 249 202 178; /* ⬅ #f9cab2 */
+--color-secondary-500: 246 179 145; /* ⬅ #f6b391 */
+--color-secondary-600: 221 161 131; /* ⬅ #dda183 */
+--color-secondary-700: 185 134 109; /* ⬅ #b9866d */
+--color-secondary-800: 148 107 87; /* ⬅ #946b57 */
+--color-secondary-900: 121 88 71; /* ⬅ #795847 */
+/* tertiary | #94bcc7 */
+--color-tertiary-50: 239 245 247; /* ⬅ #eff5f7 */
+--color-tertiary-100: 234 242 244; /* ⬅ #eaf2f4 */
+--color-tertiary-200: 228 238 241; /* ⬅ #e4eef1 */
+--color-tertiary-300: 212 228 233; /* ⬅ #d4e4e9 */
+--color-tertiary-400: 180 208 216; /* ⬅ #b4d0d8 */
+--color-tertiary-500: 148 188 199; /* ⬅ #94bcc7 */
+--color-tertiary-600: 133 169 179; /* ⬅ #85a9b3 */
+--color-tertiary-700: 111 141 149; /* ⬅ #6f8d95 */
+--color-tertiary-800: 89 113 119; /* ⬅ #597177 */
+--color-tertiary-900: 73 92 98; /* ⬅ #495c62 */
+/* success | #a27ec8 */
+--color-success-50: 241 236 247; /* ⬅ #f1ecf7 */
+--color-success-100: 236 229 244; /* ⬅ #ece5f4 */
+--color-success-200: 232 223 241; /* ⬅ #e8dff1 */
+--color-success-300: 218 203 233; /* ⬅ #dacbe9 */
+--color-success-400: 190 165 217; /* ⬅ #bea5d9 */
+--color-success-500: 162 126 200; /* ⬅ #a27ec8 */
+--color-success-600: 146 113 180; /* ⬅ #9271b4 */
+--color-success-700: 122 95 150; /* ⬅ #7a5f96 */
+--color-success-800: 97 76 120; /* ⬅ #614c78 */
+--color-success-900: 79 62 98; /* ⬅ #4f3e62 */
+/* warning | #459832 */
+--color-warning-50: 227 240 224; /* ⬅ #e3f0e0 */
+--color-warning-100: 218 234 214; /* ⬅ #daead6 */
+--color-warning-200: 209 229 204; /* ⬅ #d1e5cc */
+--color-warning-300: 181 214 173; /* ⬅ #b5d6ad */
+--color-warning-400: 125 183 112; /* ⬅ #7db770 */
+--color-warning-500: 69 152 50; /* ⬅ #459832 */
+--color-warning-600: 62 137 45; /* ⬅ #3e892d */
+--color-warning-700: 52 114 38; /* ⬅ #347226 */
+--color-warning-800: 41 91 30; /* ⬅ #295b1e */
+--color-warning-900: 34 74 25; /* ⬅ #224a19 */
+/* error | #25a1e5 */
+--color-error-50: 222 241 251; /* ⬅ #def1fb */
+--color-error-100: 211 236 250; /* ⬅ #d3ecfa */
+--color-error-200: 201 232 249; /* ⬅ #c9e8f9 */
+--color-error-300: 168 217 245; /* ⬅ #a8d9f5 */
+--color-error-400: 102 189 237; /* ⬅ #66bded */
+--color-error-500: 37 161 229; /* ⬅ #25a1e5 */
+--color-error-600: 33 145 206; /* ⬅ #2191ce */
+--color-error-700: 28 121 172; /* ⬅ #1c79ac */
+--color-error-800: 22 97 137; /* ⬅ #166189 */
+--color-error-900: 18 79 112; /* ⬅ #124f70 */
+/* surface | #376fcc */
+--color-surface-50: 225 233 247; /* ⬅ #e1e9f7 */
+--color-surface-100: 215 226 245; /* ⬅ #d7e2f5 */
+--color-surface-200: 205 219 242; /* ⬅ #cddbf2 */
+--color-surface-300: 175 197 235; /* ⬅ #afc5eb */
+--color-surface-400: 115 154 219; /* ⬅ #739adb */
+--color-surface-500: 55 111 204; /* ⬅ #376fcc */
+--color-surface-600: 50 100 184; /* ⬅ #3264b8 */
+--color-surface-700: 41 83 153; /* ⬅ #295399 */
+--color-surface-800: 33 67 122; /* ⬅ #21437a */
+--color-surface-900: 27 54 100; /* ⬅ #1b3664 */
+
+}
+@tailwind base;
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  font-size: 13px;
+}
+@tailwind components;
+@tailwind utilities;

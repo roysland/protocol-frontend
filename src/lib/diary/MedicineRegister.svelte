@@ -42,20 +42,20 @@ onMount(async () => {
 
 <TabGroup selected={storeTab}>
     <Tab value="today">
-        Today
+        Sjekkliste
     </Tab>
 	<Tab value="overview">
-        Overview
+        Oversikt
     </Tab>
 	<Tab value="Add">
-        Add
+        Legg til
     </Tab>
 </TabGroup>
 {#if $storeTab === 'today'}
 <ShowTodayMedicine></ShowTodayMedicine>
 {/if}
 {#if $storeTab === 'overview'}
-<h3>Showing all medicine</h3>
+<h3>Viser alle aktive medisiner</h3>
 
 <ol class="list">
 	{#each $medicine as med}

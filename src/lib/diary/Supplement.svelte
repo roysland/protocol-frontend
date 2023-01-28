@@ -45,7 +45,7 @@ onMount(async () => {
 </div>
 {#if page === 'add'}
 <div class="card p-4 mt-4">
-    <header class="card-header">Legg til supplement</header>
+    <header class="card-header">Legg til kosttilskudd</header>
     <label for="name">
         <span>Navn</span>
         <input class="" type="text" id="name" bind:value={name} minlength="2" required>
@@ -65,7 +65,7 @@ onMount(async () => {
 {#if page === 'overview'}
 {#await api.supplements.getAllSupplements() then }
 <div class="card m-4">
-    <header class="card-header">Mine supplementer</header>
+    <header class="card-header">Mine kosttilskudd</header>
     <ol class="list">
         {#each $supplements as sup}
         <li class="flex align-center">
@@ -80,7 +80,7 @@ onMount(async () => {
 
 {#if page === 'check'}
 <div class="card m-4">
-    <header class="card-header">Mine supplementer {moment().format('DD MMMM')}</header>
+    <header class="card-header">Mine kosttilskudd {moment().format('DD MMMM')}</header>
     <ol class="list">
         {#each $todaysSupplements as sup}
         <li class="flex align-center">

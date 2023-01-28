@@ -1,8 +1,10 @@
 <script>
-    import { TabGroup, Tab } from '@skeletonlabs/skeleton';
+    import { TabGroup, Tab, toastStore } from '@skeletonlabs/skeleton';
     import { push } from 'svelte-spa-router';
     import { writable } from 'svelte/store';
-    import { api } from '../store/api';
+    import { user, api } from '../store/api';
+    import axios from 'axios';
+    import { onMount } from 'svelte';
     let storeTab = writable('login')
 
     let email
@@ -16,14 +18,25 @@
         }   
         
     }
-    const login = async (e) => {
-        e.preventDefault()
-        if (email && password) {
-            await api.user.login({email: email, password: password})
-            window.location.reload()
+    const login = async () => {
+        const response = await api.user.login({email: email, password: password})
+        if (response.data.user) {
+            localStorage.setItem('user', JSON.stringify(response.data.user))
+            user.set(response.data.user)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${$user.token}`
+            push('/')
+        } else {
+            toastStore.trigger({
+                    message: response.data.msg,
+                    preset: 'error'
+                })
         }
-        
     }
+    onMount(() => {
+        if ($user) {
+            push('/')
+        }
+    })
 </script>
 <section class="m-4 p-4">
 <TabGroup selected={storeTab}>
@@ -50,7 +63,7 @@
 </article>
 </form>
 {:else}
-<form on:submit={register}>
+<form on:submit={registerUser}>
 <article class="card p-4">
     <header class="card-header">Lag en bruker</header>
     <label class="input-label">

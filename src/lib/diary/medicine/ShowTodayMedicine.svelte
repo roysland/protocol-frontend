@@ -37,6 +37,7 @@ const markInput = async (med) => {
             m.checked = true
         }
     })
+    showCongrats = isAllComplete()
 }
 
 const wasCheckedToday = (date) => {
@@ -45,18 +46,18 @@ const wasCheckedToday = (date) => {
 
 const isAllComplete = () => {
     const medicinesLeft = $todaysMedicine.filter((item) => {
-        return item.history && item.history.length > 0 && item.history.check
+        return item.history && item.history.length > 0
     })
-    console.log(medicinesLeft)
-    return medicinesLeft.length
+    console.log(`${$todaysMedicine.length} - ${medicinesLeft.length}`)
+    return medicinesLeft.length === $todaysMedicine.length
 
 }
-
+let showCongrats = isAllComplete()
 onMount(async() => {
     await api.medicine.todaysMedicine()
 })
 </script>
-{#if isAllComplete() === $todaysMedicine.length}
+{#if showCongrats}
 <div class="alert alert-success m-4">
     <div class="alert-message">
         <h3>Flott</h3>
@@ -65,6 +66,7 @@ onMount(async() => {
 </div>
 {/if}
 <div class="card m-4 p-4">
+{#if orderedList().morning.length > 0}
 <p>Morgen</p>
 <ul>
     {#each orderedList().morning as med}
@@ -81,6 +83,8 @@ onMount(async() => {
         </li>
     {/each}
 </ul>
+{/if}
+{#if orderedList().midday.length > 0}
 <p>Formiddag</p>
 <ul>
     {#each orderedList().midday as med}
@@ -97,6 +101,8 @@ onMount(async() => {
         </li>
     {/each}
 </ul>
+{/if}
+{#if orderedList().afternoon.length > 0}
 <p>Ettermiddag</p>
 <ul>
     {#each orderedList().afternoon as med}
@@ -113,6 +119,8 @@ onMount(async() => {
         </li>
     {/each}
 </ul>
+{/if}
+{#if orderedList().evening.length > 0}
 <p>Kveld</p>
 <ul>
     {#each orderedList().evening as med}
@@ -129,4 +137,5 @@ onMount(async() => {
         </li>
     {/each}
 </ul>
+{/if}
 </div>

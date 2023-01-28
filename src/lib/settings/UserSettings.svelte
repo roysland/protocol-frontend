@@ -1,6 +1,6 @@
 <script>
 import { SlideToggle } from "@skeletonlabs/skeleton";
-
+import { user, api } from '../../store/api'
 let settings = [
     { name: 'Poop', value: false },
     { name: 'Medicine', value: false },
@@ -31,14 +31,17 @@ const saveSettings = () => {
 
 <div class="card p-4">
     <strong>User settings</strong>
-    {#each settings as setting}
+    <div>
+        <button on:click={api.user.logout} class="btn btn-filled btn-primary">Log out</button>
+    </div>
+    <!-- {#each settings as setting}
     <div>
         <SlideToggle bind:checked={setting.value} value={setting.value}>{setting.name}</SlideToggle>
     </div>
-    {/each}
-    <footer class="card-footer">
+    {/each} -->
+    <!-- <footer class="card-footer">
         <div>
             <button class="btn btn-filled btn-secondary" on:click={saveSettings}>Save settings</button>
         </div>
-    </footer>
+    </footer> -->
 </div>

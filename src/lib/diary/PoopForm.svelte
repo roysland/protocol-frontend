@@ -57,11 +57,11 @@ api.stool.getMyPoops()])
 </div>
 {/if}
 
-<div id="poopmap"></div>
-
+{#if !showForm}
 <div class="flex items-center justify-center p-4">
     <button class="btn btn-filled-primary" on:click={() => { showForm = true}}>Legg til dobesøk</button>
 </div>
+{/if}
 <nav class="list-nav">
 	<p class="font-bold">Siste dobesøk</p>
 	<dl class="list-dl">

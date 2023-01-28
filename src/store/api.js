@@ -1,21 +1,28 @@
 import axios from 'axios';
 import { writable } from 'svelte/store';
 import { toastStore } from '@skeletonlabs/skeleton';
-
-axios.defaults.baseURL = import.meta.env.VITE_API_ENDPOINT
-axios.interceptors.response.use(function (response) {
-    return response;
-  }, function (error) {
-    console.log(response)
-    return Promise.reject(error);
-  });
+import { push } from 'svelte-spa-router';
 export const user = writable(null)
 export const periods = writable([])
 export const poops = writable([])
 export const poopTypes = writable([])
 export const supplements = writable([])
+export const todaysSupplements = writable([])
 export const medicine = writable([])
 export const todaysMedicine = writable([])
+
+axios.defaults.baseURL = import.meta.env.VITE_API_ENDPOINT
+axios.interceptors.response.use(function (response) {
+    return response;
+  }, function (error) {
+    if (error.response.status === 401) {
+        user.set(null)
+        localStorage.removeItem('user')
+        push('/login')
+    }
+    return Promise.reject(error);
+  });
+
 export const api = {
     user: {
         register: async (user) => {
@@ -31,17 +38,13 @@ export const api = {
             })
             return req
         },
+        logout: async () => {
+            user.set(null)
+            localStorage.removeItem('user')
+            push('/login')
+        },
         login: async (user) => {
-            await axios.post('/login', user).then((response) => {
-                localStorage.setItem('user', JSON.stringify(response.data.user))
-                user.set(response.data.user)
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
-            }).catch((e) => {
-                toastStore.trigger({
-                    message: 'Noe gikk galt.',
-                    preset: 'error'
-                })
-            })
+            return await axios.post('/login', user)
         },
         refreshToken: async () => {
             const storedUser = JSON.parse(localStorage.getItem('user'))
@@ -60,6 +63,12 @@ export const api = {
         addMedicine: async (medicine) => {
             axios.post('/medicine', medicine).then(async (response) => {
                 await api.medicine.allMedicine()
+            })
+        },
+        deleteMedicine: async (array) => {
+            axios.post('/medicine/delete', { items: array}).then(async () => {
+                await api.medicine.allMedicine()
+                await api.medicine.todaysMedicine()
             })
         },
         allMedicine: async () => {
@@ -120,8 +129,9 @@ export const api = {
             })
         },
         getAllSupplements: async () => {
-            axios.get('/supplements').then((response) => {
+            axios.get('/supplements').then(async (response) => {
                 supplements.set(response.data.supplements)
+                await api.supplements.getTodays()
             })
         },
         getTodaysSupplements: async () => {
@@ -135,8 +145,13 @@ export const api = {
             })
         },
         markDailyCheck: async (sup) => {
-            axios.post('/supplements/daily', sup).then(() => {
-
+            axios.post('/supplements/check', sup).then((data) => {
+                api.supplements.getAllSupplements()
+            })
+        },
+        getTodays: async () => {
+            axios.get('/supplements/today').then((data) => {
+                todaysSupplements.set(data.data.today)
             })
         }
     }

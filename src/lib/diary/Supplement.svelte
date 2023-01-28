@@ -1,7 +1,8 @@
 <script>
 import { SlideToggle } from "@skeletonlabs/skeleton";
     import moment from "moment";
-import { api, supplements } from "../../store/api";
+    import { onMount } from "svelte";
+import { api, supplements, todaysSupplements } from "../../store/api";
 let name
 let interval
 let checkedSupplements = []
@@ -16,14 +17,17 @@ const addSupplement = async () => {
     page = 'overview'
 }
 
-const markChecked = (supplement) => {
-    // console.log(supplement)
+const markChecked = async (supplement) => {
+    await api.supplements.markDailyCheck(supplement)
 }
 
 const deleteChecked = async () => {
     await api.supplements.deleteSupplements(checkedSupplements)
     checkedSupplements = []
 }
+onMount(async () => {
+    await api.supplements.getAllSupplements()
+})
 </script>
 <div class="radio-group items-center p-1 overflow-hidden space-x-1 rounded-token flex bg-surface-200-700-token border-surface-300 dark:border-surface-600 border-token rounded-token " data-testid="radio-group" role="radiogroup" aria-label="radiogroup">
     <div class="radio-item flex-auto" role="radio" aria-checked="true" aria-label="" tabindex="0" data-testid="radio-item">
@@ -75,19 +79,20 @@ const deleteChecked = async () => {
 {/if}
 
 {#if page === 'check'}
-{#await api.supplements.getAllSupplements() then }
 <div class="card m-4">
     <header class="card-header">Mine supplementer {moment().format('DD MMMM')}</header>
     <ol class="list">
-        {#each $supplements as sup}
+        {#each $todaysSupplements as sup}
         <li class="flex align-center">
+            {#if sup.history.length}
+            <SlideToggle size="sm" checked disabled><span>{sup.name}</span></SlideToggle>
+            {:else}
             <SlideToggle size="sm" on:change={() => markChecked(sup)}><span>{sup.name}</span></SlideToggle>
-            
+            {/if}
         </li>
         {/each}
     </ol>
 </div>
-{/await}
 {/if}
 
 <div class="deleteDrawer bg-primary {checkedSupplements.length > 0 ? 'show' : 'hide'}">

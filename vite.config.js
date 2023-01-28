@@ -16,15 +16,7 @@ export default ({ mode }) => {
   process.env = {...process.env, ...loadEnv(mode, process.cwd())}
   return defineConfig({
     plugins: [
-      svelte(),
-      VitePWA({
-        injectRegister: 'auto',
-        includeAssets: ['Vector192.svg'],
-        registerType: 'autoUpdate',
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg}']
-        }
-      })
+      svelte()
     ],
     resolve: {
       alias: {
